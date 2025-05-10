@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Your Cart - Freeman Atelier</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+  <h2>Your Cart</h2>
+
+  <div th:if="${#lists.isEmpty(cart)}">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <div th:unless="${#lists.isEmpty(cart)}">
+    <table>
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price (£)</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="item, iterStat : ${cart}">
+        <td th:text="${item.name}">Product Name</td>
+        <td th:text="${item.price}">Price</td>
+        <td>
+          <form th:action="@{/cart/remove/{index}(index=${iterStat.index})}" method="post">
+            <button type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Total: £<span th:text="${total}">0.00</span></strong></p>
+
+    <form th:action="@{/cart/clear}" method="post">
+      <button type="submit">Clear Cart</button>
+    </form>
+    <br>
+    <form th:action="@{/checkout}" method="get">
+      <button type="submit">Proceed to Checkout</button>
+    </form>
+  </div>
+
+  <p><a th:href="@{/customize}">Add another shoe!</a></p>
+  <a th:href="@{/home}">Home</a>
+</div>
+</body>
+</html>

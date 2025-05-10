@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customize Shoe</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Select a Shoe Type</h2>
+<a th:href="@{/home}">Home</a>
+<br>
+<form action="/customize/add-to-cart" method="post">
+    <label>Shoe Type:
+        <select name="shoeType">
+            <option th:each="type : ${shoeTypes}" th:value="${type}" th:text="${type}"></option>
+        </select>
+    </label>
+
+    <label>Shoe Size:
+        <select name="shoeSize">
+            <option value="" disabled selected>Select Size</option>
+            <option th:each="size : ${#numbers.sequence(35, 48)}" th:value="${size}" th:text="${size}"></option>
+        </select>
+    </label><br/><br/>
+
+    <h3>Select Customs</h3>
+    <div th:each="custom : ${customOptions}">
+        <label>
+            <input type="checkbox" name="customs" th:value="${custom}" />
+            <span th:text="${custom}"></span>
+        </label><br/>
+    </div>
+<br>
+    <button type="submit">Add to Cart</button>
+</form>
+</body>
+</html>

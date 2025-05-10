@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Admin - Products</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+<p>Welcome Freeman, <span sec:authentication="name"></span> | <a th:href="@{/adminpanel}">Logout</a></p>
+
+<div class="container">
+  <h2>Admin Panel</h2>
+  <a th:href="@{/admin/products/add}">Add New Shoe</a> |
+  <a th:href="@{/admin/orders}">View Orders</a>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th><th>Type</th><th>Price</th><th>Image</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="shoe : ${shoes}">
+      <td th:text="${shoe.name}"></td>
+      <td th:text="${shoe.type}"></td>
+      <td th:text="'£' + ${shoe.price}"></td>
+      <td><img th:src="${shoe.imageUrl}" style="max-width: 80px;"></td>
+      <td>
+        <a th:href="@{/admin/products/edit/{id}(id=${shoe.id})}">Edit</a>
+        <form th:action="@{/admin/products/delete/{id}(id=${shoe.id})}" method="post" style="display:inline;">
+          <button type="submit" onclick="return confirm('Delete this shoe?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

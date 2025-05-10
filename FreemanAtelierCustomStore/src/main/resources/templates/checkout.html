@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Checkout</title></head>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<body>
+<h2>Checkout</h2>
+<p>Total: <b th:text="'£' + ${totalAmount}"></b></p>
+
+<form action="/checkout" method="post">
+  <p><label>Select Payment Method:</label>
+  <select name="method">
+    <option th:each="m : ${paymentMethods}" th:value="${m}" th:text="${m}"></option>
+  </select></p>
+  <br>
+  <button type="submit">Pay Now</button>
+</form>
+</body>
+</html>

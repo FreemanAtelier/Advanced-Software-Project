@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Admin - Manage Orders</title>
+</head>
+<p><a th:href="@{/admin}">Back to Admin Dashboard</a>| <a th:href="@{/adminpanel}">Logout</a></p>
+
+<body>
+<h1>All Orders</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Order ID</th>
+    <th>User</th>
+    <th>Amount</th>
+    <th>Payment</th>
+    <th>Status</th>
+    <th>Created</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order : ${orders}">
+    <td th:text="${order.id}"></td>
+    <td th:text="${order.username}"></td>
+    <td th:text="'£' + ${order.totalAmount}"></td>
+    <td th:text="${order.paymentMethod}"></td>
+    <td th:text="${order.status}"></td>
+    <td th:text="${order.createdAt}"></td>
+    <td>
+      <form th:action="@{'/admin/orders/' + ${order.id} + '/ship'}" method="post" th:if="${order.status} == 'PLACED'">
+        <button type="submit">Mark as Shipped</button>
+      </form>
+      <span th:if="${order.status} == 'SHIPPED'">Shipped</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
